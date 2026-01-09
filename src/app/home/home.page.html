@@ -1,20 +1,67 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Finance Tracker</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <!-- Balance Card -->
+  <ion-card class="balance-card">
+    <h2>Current Balance</h2>
+    <h1>₹ {{ balance }}</h1>
+  </ion-card>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- Summary Cards -->
+  <div class="summary">
+    <ion-card class="income">
+      <p>Income</p>
+      <h3>₹ {{ totalIncome }}</h3>
+    </ion-card>
+
+    <ion-card class="expense">
+      <p>Expense</p>
+      <h3>₹ {{ totalExpense }}</h3>
+    </ion-card>
   </div>
+
+  <!-- Quick Actions -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Quick Actions</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-button expand="block" color="success"> + Add Income </ion-button>
+
+      <ion-button expand="block" color="danger"> + Add Expense </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Recent Transactions -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Recent Transactions</ion-card-title>
+    </ion-card-header>
+
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <h3>Food</h3>
+          <p>Lunch</p>
+        </ion-label>
+        <ion-text color="danger">- ₹200</ion-text>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <h3>Salary</h3>
+          <p>Monthly income</p>
+        </ion-label>
+        <ion-text color="success">+ ₹25000</ion-text>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>

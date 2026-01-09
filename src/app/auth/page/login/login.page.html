@@ -1,0 +1,61 @@
+<ion-content class="login-container">
+  <img
+    src="https://img.freepik.com/free-vector/access-control-system-abstract-concept_335657-3180.jpg"
+    alt="App Logo"
+    class="logo"
+  />
+  <ion-card-header>
+    <ion-card-title>Welcome Back 👋</ion-card-title>
+    <ion-card-subtitle>Login to manage your expenses</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <form [formGroup]="form">
+      <div class="form-item">
+        <ion-input
+          label="Email"
+          labelPlacement="floating"
+          formControlName="email"
+          fill="outline"
+        >
+        </ion-input>
+        @if (form.get('email')?.touched && form.get('email')?.invalid) {
+        <ion-text color="danger"> Enter a valid email </ion-text>
+        }
+      </div>
+      <div class="form-item">
+        <ion-input
+          type="password"
+          label="Password"
+          labelPlacement="floating"
+          formControlName="password"
+          fill="outline"
+        >
+        </ion-input>
+        @if (form.get('password')?.touched && form.get('password')?.invalid) {
+        <ion-text color="danger">
+          Password must be at least 6 characters
+        </ion-text>
+        }
+      </div>
+
+      <ion-button
+        expand="block"
+        class="auth-btn"
+        [disabled]="form.invalid || loading"
+        (click)="login()"
+      >
+        @if (loading) {
+        <ion-spinner></ion-spinner>
+        } @else {
+        <span>Login</span>
+        }
+      </ion-button>
+    </form>
+
+    <p class="switch">
+      New user?
+      <a routerLink="/auth/register"> Create account </a>
+    </p>
+  </ion-card-content>
+</ion-content>
