@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>add-budget</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-input
+    fill="outline"
+    label="Month"
+    type="month"
+    formControlName="month"
+  ></ion-input>
+
+  <ion-input
+    fill="outline"
+    label="Monthly Limit"
+    type="number"
+    formControlName="limit"
+  ></ion-input>
+
+  <ion-button expand="block" (click)="saveBudget()"> Save Budget </ion-button>
+</ion-content>

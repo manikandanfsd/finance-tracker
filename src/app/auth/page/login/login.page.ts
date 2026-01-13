@@ -33,7 +33,7 @@ export class LoginPage {
     try {
       const { email, password } = this.form.value;
       await this.auth.login(email!, password!);
-      this.router.navigate(['/main/home']);
+      this.router.navigate(['/main/tabs']);
     } catch (err: any) {
       alert(err.message);
     } finally {

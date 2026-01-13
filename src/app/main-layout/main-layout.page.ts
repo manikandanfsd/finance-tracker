@@ -19,7 +19,7 @@ import {
 })
 export class MainLayoutComponent {
   menuItems = [
-    { title: 'Home', url: '/main/home', icon: 'home-outline' },
+    { title: 'Home', url: '/main/tabs', icon: 'home-outline' },
     { title: 'Categories', url: '/main/category', icon: 'list-outline' },
     // { title: 'Profile', url: '/main/profile', icon: 'person-outline' },
   ];
