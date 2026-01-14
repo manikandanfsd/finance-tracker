@@ -8,6 +8,10 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <div class="welcome-box">
+    <h2>Welcome back 👋</h2>
+    <p class="sub-text">Let’s manage your money wisely today</p>
+  </div>
   <!-- Balance Card -->
   <ion-card class="balance-card">
     <h2>Current Balance</h2>
@@ -34,34 +38,17 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-button expand="block" color="success"> + Add Income </ion-button>
+      <ion-button
+        expand="block"
+        color="success"
+        routerLink="/main/tabs/expense"
+      >
+        + Add Income
+      </ion-button>
 
-      <ion-button expand="block" color="danger"> + Add Expense </ion-button>
+      <ion-button expand="block" color="danger" routerLink="/main/expense">
+        + Add Expense
+      </ion-button>
     </ion-card-content>
-  </ion-card>
-
-  <!-- Recent Transactions -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Recent Transactions</ion-card-title>
-    </ion-card-header>
-
-    <ion-list>
-      <ion-item>
-        <ion-label>
-          <h3>Food</h3>
-          <p>Lunch</p>
-        </ion-label>
-        <ion-text color="danger">- ₹200</ion-text>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>
-          <h3>Salary</h3>
-          <p>Monthly income</p>
-        </ion-label>
-        <ion-text color="success">+ ₹25000</ion-text>
-      </ion-item>
-    </ion-list>
   </ion-card>
 </ion-content>

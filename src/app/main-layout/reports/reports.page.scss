@@ -1,0 +1,11 @@
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  width: 300px;
+  margin: auto;
+}

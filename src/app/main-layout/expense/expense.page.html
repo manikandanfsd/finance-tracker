@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Add Entry</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-icon slot="end" name="calendar-outline"> </ion-icon>
+  <form [formGroup]="form">
+    <div class="form-item">
+      <ion-select
+        fill="outline"
+        label="Expense Type"
+        formControlName="type"
+        labelPlacement="floating"
+        placeholder="Select"
+      >
+        <ion-icon slot="start" name="documents-outline"></ion-icon>
+        <ion-select-option value="in">Cash In</ion-select-option>
+        <ion-select-option value="out">Cash Out</ion-select-option>
+      </ion-select>
+    </div>
+    <div class="form-item">
+      <ion-input
+        fill="outline"
+        label="Date & Time"
+        labelPlacement="floating"
+        [value]="displayDateTime"
+        readonly
+        (click)="openDateTimePicker()"
+        id="click-trigger"
+      >
+        <ion-icon slot="start" name="calendar-outline"> </ion-icon>
+      </ion-input>
+      <ion-popover
+        [isOpen]="openDateTime"
+        (didDismiss)="closeDateTimePicker()"
+        trigger="click-trigger"
+        side="bottom"
+        alignment="center"
+        animation="md-transition"
+      >
+        <ng-template>
+          <ion-content class="ion-padding">
+            <ion-datetime
+              presentation="date-time"
+              [value]="form.get('dateTime')?.value"
+              (ionChange)="onDateTimeChange($event)"
+            >
+            </ion-datetime>
+            <ion-button expand="block" (click)="closeDateTimePicker()"
+              >Done</ion-button
+            >
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+    </div>
+
+    <div class="form-item">
+      <ion-input
+        fill="outline"
+        label="Amount *"
+        type="number"
+        placeholder="0.00"
+        formControlName="amount"
+        labelPlacement="floating"
+      >
+        <ion-icon
+          name="information-circle-outline"
+          size="medium"
+          slot="start"
+        ></ion-icon>
+      </ion-input>
+    </div>
+    <div class="form-item">
+      <ion-input
+        fill="outline"
+        label="Remarks"
+        autoGrow="true"
+        formControlName="remarks"
+        labelPlacement="floating"
+      >
+        <ion-icon slot="start" name="document-text-outline"></ion-icon>
+      </ion-input>
+    </div>
+    <div class="form-item">
+      <ion-select
+        fill="outline"
+        label="Category"
+        formControlName="category"
+        labelPlacement="floating"
+        placeholder="Select"
+      >
+        @for (cat of categories; track $index) {
+        <ion-select-option value="{{cat.name}}">{{cat.name}}</ion-select-option>
+        }
+      </ion-select>
+    </div>
+    <div class="form-item">
+      <ion-select
+        fill="outline"
+        label="Payment Mode"
+        formControlName="paymentMode"
+        labelPlacement="floating"
+        placeholder="Select"
+      >
+        <ion-icon slot="start" name="documents-outline"></ion-icon>
+        <ion-select-option value="Cash">Cash</ion-select-option>
+        <ion-select-option value="UPI">UPI</ion-select-option>
+        <ion-select-option value="Card">Card</ion-select-option>
+      </ion-select>
+    </div>
+    <br />
+    <div class="form-item">
+      <ion-button color="primary" expand="block" (click)="saveExpense()">
+        Save Expense
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

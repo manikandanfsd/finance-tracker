@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from './category.service';
 import { RouterModule } from '@angular/router';
-import { addIcons } from 'ionicons';
-import { trash, menu } from 'ionicons/icons';
+
+import { serverTimestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-category',
@@ -19,23 +19,32 @@ export class CategoryPage {
 
   form = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
+    budgetAmount: [],
   });
 
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryService
-  ) {
-    addIcons({ trash, menu });
-  }
+  ) {}
 
-  async addCategory() {
+  async saveCategory() {
     if (this.form.invalid) return;
 
-    await this.categoryService.addCategory(this.form.value.name!.trim());
+    const data = {
+      name: this.form.value.name ?? '',
+      budgetAmount: Number(this.form.value.budgetAmount),
+      createdAt: serverTimestamp(),
+    };
+
+    await this.categoryService.addCategory(data);
     this.form.reset();
   }
 
   deleteCategory(id: string) {
     this.categoryService.deleteCategory(id);
+  }
+
+  editCategory(id: string) {
+    // Navigate to edit page or open a modal for editing
   }
 }

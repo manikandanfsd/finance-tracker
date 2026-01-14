@@ -1,13 +1,45 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>reports</ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Reports</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">reports</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <!-- Filters -->
+  <div class="filter-row">
+    <ion-select
+      fill="outline"
+      label="Month"
+      labelPlacement="floating"
+      [(ngModel)]="selectedMonth"
+      (ionChange)="loadReport()"
+    >
+      <ion-select-option *ngFor="let m of months" [value]="m.value">
+        {{ m.label }}
+      </ion-select-option>
+    </ion-select>
+
+    <ion-select
+      fill="outline"
+      label="Year"
+      labelPlacement="floating"
+      [(ngModel)]="selectedYear"
+      (ionChange)="loadReport()"
+    >
+      <ion-select-option *ngFor="let y of years" [value]="y">
+        {{ y }}
+      </ion-select-option>
+    </ion-select>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-container">
+    <canvas #chartCanvas></canvas>
+  </div>
+
+  <h3 class="section-title">Monthly Expense</h3>
+  <canvas #monthlyChart></canvas>
 </ion-content>

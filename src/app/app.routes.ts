@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
 
   {
     path: 'auth',
@@ -43,38 +43,38 @@ export const routes: Routes = [
           {
             path: 'home',
             loadComponent: () =>
-              import('./main-layout/tabs/home/home.page').then(
-                (m) => m.HomePage
+              import('./main-layout/home/home.page').then((m) => m.HomePage),
+          },
+          {
+            path: 'category',
+            loadComponent: () =>
+              import('./main-layout/category/category.page').then(
+                (m) => m.CategoryPage
+              ),
+          },
+          {
+            path: 'transactions',
+            loadComponent: () =>
+              import('./main-layout/transactions/transactions.page').then(
+                (m) => m.TransactionsPage
+              ),
+          },
+          {
+            path: 'reports',
+            loadComponent: () =>
+              import('./main-layout/reports/reports.page').then(
+                (m) => m.ReportsPage
+              ),
+          },
+          {
+            path: 'expense',
+            loadComponent: () =>
+              import('./main-layout/expense/expense.page').then(
+                (m) => m.ExpensePage
               ),
           },
         ],
       },
-      {
-        path: 'category',
-        loadComponent: () =>
-          import('./main-layout/category/category.page').then(
-            (m) => m.CategoryPage
-          ),
-      },
-      {
-        path: 'add-expense',
-        loadComponent: () =>
-          import('./main-layout/add-expense/add-expense.page').then(
-            (m) => m.AddExpensePage
-          ),
-      },
     ],
-  },
-  {
-    path: 'add-budget',
-    loadComponent: () => import('./main-layout/add-budget/add-budget.page').then( m => m.AddBudgetPage)
-  },
-  {
-    path: 'reports',
-    loadComponent: () => import('./main-layout/reports/reports.page').then( m => m.ReportsPage)
-  },
-  {
-    path: 'transactions',
-    loadComponent: () => import('./main-layout/transactions/transactions.page').then( m => m.TransactionsPage)
   },
 ];
