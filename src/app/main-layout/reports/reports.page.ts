@@ -48,9 +48,9 @@ export class ReportsPage implements AfterViewInit {
 
   loadReport() {
     this.expenseService.getExpensesWithCategory().subscribe((expenses) => {
-      console.log(expenses, 'expenses');
       const filtered = expenses.filter((e: any) => {
-        const d = e.createdAt.toDate();
+        // Use dateTime which is the user-selected date
+        const d = new Date(e.dateTime);
         return (
           d.getMonth() === this.selectedMonth &&
           d.getFullYear() === this.selectedYear
@@ -60,7 +60,7 @@ export class ReportsPage implements AfterViewInit {
       const categoryMap: any = {};
       filtered.forEach((e: any) => {
         const name = e.category?.name || 'Other';
-        categoryMap[name] = (categoryMap[name] || 0) + e.amount;
+        categoryMap[name] = (categoryMap[name] || 0) + (+e.amount || 0);
       });
 
       this.renderChart(Object.keys(categoryMap), Object.values(categoryMap));
@@ -71,13 +71,11 @@ export class ReportsPage implements AfterViewInit {
     this.expenseService.getExpensesWithCategory().subscribe((expenses) => {
       const monthlyData = Array(12).fill(0);
       expenses.forEach((e: any) => {
-        const d = e.createdAt.toDate();
+        const d = new Date(e.dateTime);
         if (d.getFullYear() === year) {
-          monthlyData[d.getMonth()] += e.amount;
+          monthlyData[d.getMonth()] += +e.amount || 0;
         }
       });
-
-      console.log(monthlyData, 'monthlyData');
 
       this.renderMonthlyChart(monthlyData);
     });

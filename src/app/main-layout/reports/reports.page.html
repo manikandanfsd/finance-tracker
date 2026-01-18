@@ -1,45 +1,66 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Reports</ion-title>
+    <ion-title class="fw-bold" style="font-weight: 700"
+      >Financial Reports</ion-title
+    >
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <!-- Filters -->
-  <div class="filter-row">
-    <ion-select
-      fill="outline"
-      label="Month"
-      labelPlacement="floating"
-      [(ngModel)]="selectedMonth"
-      (ionChange)="loadReport()"
-    >
-      <ion-select-option *ngFor="let m of months" [value]="m.value">
-        {{ m.label }}
-      </ion-select-option>
-    </ion-select>
+  <!-- Filters Card -->
+  <ion-card class="filters-card">
+    <div class="filter-row">
+      <ion-select
+        fill="outline"
+        label="Month"
+        labelPlacement="stacked"
+        [(ngModel)]="selectedMonth"
+        (ionChange)="loadReport()"
+        interface="popover"
+      >
+        <ion-select-option *ngFor="let m of months" [value]="m.value">
+          {{ m.label }}
+        </ion-select-option>
+      </ion-select>
 
-    <ion-select
-      fill="outline"
-      label="Year"
-      labelPlacement="floating"
-      [(ngModel)]="selectedYear"
-      (ionChange)="loadReport()"
-    >
-      <ion-select-option *ngFor="let y of years" [value]="y">
-        {{ y }}
-      </ion-select-option>
-    </ion-select>
+      <ion-select
+        fill="outline"
+        label="Year"
+        labelPlacement="stacked"
+        [(ngModel)]="selectedYear"
+        (ionChange)="loadReport()"
+        interface="popover"
+      >
+        <ion-select-option *ngFor="let y of years" [value]="y">
+          {{ y }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+  </ion-card>
+
+  <!-- Charts -->
+  <div class="chart-section">
+    <div class="section-header">
+      <h3>Distribution</h3>
+    </div>
+    <ion-card class="chart-card">
+      <div class="chart-wrapper">
+        <canvas #chartCanvas></canvas>
+      </div>
+    </ion-card>
+
+    <div class="section-header">
+      <h3>Monthly Trend</h3>
+    </div>
+    <ion-card class="chart-card">
+      <div class="chart-wrapper">
+        <canvas #monthlyChart></canvas>
+      </div>
+    </ion-card>
   </div>
 
-  <!-- Chart -->
-  <div class="chart-container">
-    <canvas #chartCanvas></canvas>
-  </div>
-
-  <h3 class="section-title">Monthly Expense</h3>
-  <canvas #monthlyChart></canvas>
+  <div class="ion-padding-bottom"></div>
 </ion-content>

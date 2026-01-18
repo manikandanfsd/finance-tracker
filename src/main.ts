@@ -5,6 +5,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { addIcons } from 'ionicons';
 import {
   add,
+  addCircleOutline,
   addOutline,
   arrowDown,
   arrowDownOutline,
@@ -17,6 +18,7 @@ import {
   documentsOutline,
   documentTextOutline,
   fileTrayStackedOutline,
+  folderOpenOutline,
   gridOutline,
   home,
   homeOutline,
@@ -37,6 +39,8 @@ import {
   statsChartOutline,
   swapHorizontal,
   trash,
+  trashOutline,
+  trendingUp,
   wallet,
 } from 'ionicons/icons';
 import {
@@ -88,6 +92,10 @@ addIcons({
   swapHorizontal,
   arrowUpOutline,
   arrowDownOutline,
+  trendingUp,
+  folderOpenOutline,
+  trashOutline,
+  addCircleOutline,
 });
 
 bootstrapApplication(AppComponent, {

@@ -1,0 +1,76 @@
+@import "../../../theme/variables.scss";
+
+.form-container {
+  background: var(--ion-card-background, #fff);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+
+  .type-selector {
+    margin-bottom: 24px;
+    ion-segment {
+      background: var(--ion-color-light);
+      border-radius: 12px;
+      padding: 4px;
+
+      ion-segment-button {
+        --indicator-color: #fff;
+        --color: var(--ion-color-medium);
+        --color-checked: var(--ion-text-color);
+        --border-radius: 8px;
+        font-weight: 500;
+
+        &.segment-button-checked {
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Custom shadow if needed */
+        }
+      }
+    }
+  }
+
+  .amount-input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ion-color-light);
+    border-radius: 16px;
+    padding: 24px 16px;
+    margin-bottom: 24px;
+
+    .currency {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--ion-color-medium);
+      margin-right: 8px;
+    }
+
+    .amount-input {
+      font-size: 32px;
+      font-weight: 700;
+      --padding-start: 0;
+      width: 150px;
+      text-align: center;
+      --background: transparent;
+    }
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0; // form-items have margin
+
+    @media (min-width: 500px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+  }
+}
+
+.save-btn {
+  --border-radius: 16px;
+  height: 52px;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  margin-top: 16px;
+}

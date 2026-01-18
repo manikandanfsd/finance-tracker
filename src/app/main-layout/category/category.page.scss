@@ -1,7 +1,94 @@
-ion-card {
-  border-radius: 16px;
+@import "../../../theme/variables.scss";
+
+// Add Card
+.add-card {
+  margin-inline: 0;
+  margin-top: 0;
+  margin-bottom: 24px;
+  background: var(--ion-card-background, #fff);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 12px;
+
+    .form-item {
+      flex: 1;
+      margin-bottom: 16px;
+    }
+  }
+
+  .save-btn {
+    --border-radius: 12px;
+    height: 48px;
+    font-weight: 600;
+    margin-top: 8px;
+  }
 }
 
-ion-input {
-  margin-bottom: 10px;
+// Section Title
+.section-title {
+  margin-bottom: 12px;
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+// List
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .category-item {
+    background: var(--ion-card-background, #fff);
+    padding: 12px 16px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    .icon-box {
+      width: 44px;
+      height: 44px;
+      background: var(--ion-color-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: var(--ion-color-primary);
+    }
+
+    .info {
+      flex: 1;
+
+      h4 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      p {
+        margin: 2px 0 0 0;
+        font-size: 13px;
+        color: var(--ion-color-medium);
+      }
+    }
+  }
+
+  .empty-message {
+    text-align: center;
+    padding: 24px;
+    color: var(--ion-color-medium);
+  }
 }
