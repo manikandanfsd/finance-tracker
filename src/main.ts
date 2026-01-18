@@ -4,7 +4,12 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { addIcons } from 'ionicons';
 import {
+  add,
   addOutline,
+  arrowDown,
+  arrowDownOutline,
+  arrowUp,
+  arrowUpOutline,
   calendarOutline,
   cashOutline,
   checkmarkCircleOutline,
@@ -27,8 +32,10 @@ import {
   radio,
   reader,
   readerOutline,
+  remove,
   search,
   statsChartOutline,
+  swapHorizontal,
   trash,
   wallet,
 } from 'ionicons/icons';
@@ -74,6 +81,13 @@ addIcons({
   wallet,
   checkmarkCircleOutline,
   personAdd,
+  arrowDown,
+  arrowUp,
+  add,
+  remove,
+  swapHorizontal,
+  arrowUpOutline,
+  arrowDownOutline,
 });
 
 bootstrapApplication(AppComponent, {

@@ -10,6 +10,7 @@ import {
   serverTimestamp,
 } from '@angular/fire/firestore';
 import { map, combineLatest, Observable } from 'rxjs';
+import { Category } from '../category/category.service';
 
 export interface Expense {
   id?: string;
@@ -20,6 +21,10 @@ export interface Expense {
   category: string;
   paymentMode: string;
   createdAt?: Date;
+}
+
+export interface ExpenseWithCategory extends Omit<Expense, 'category'> {
+  category: Category | null;
 }
 
 @Injectable({
@@ -60,20 +65,20 @@ export class ExpenseService {
     }) as Observable<Expense[]>;
   }
 
-  getExpensesWithCategory() {
+  getExpensesWithCategory(): Observable<ExpenseWithCategory[]> {
     const categories$ = collectionData(
       collection(this.firestore, 'categories'),
-      { idField: 'id' }
+      { idField: 'id' },
     );
 
     return combineLatest([this.getExpenses(), categories$]).pipe(
       map(([expenses, categories]: any[]) =>
-        expenses.map((exp: any) => ({
+        expenses.map((exp: Expense) => ({
           ...exp,
           category:
-            categories.find((cat: any) => cat.id === exp.category) || null,
-        }))
-      )
+            categories.find((cat: Category) => cat.id === exp.category) || null,
+        })),
+      ),
     );
   }
 }

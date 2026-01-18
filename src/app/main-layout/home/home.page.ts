@@ -1,8 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
+import {
+  Expense,
+  ExpenseService,
+  ExpenseWithCategory,
+} from '../expense/expense.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -11,12 +18,42 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage {
-  constructor() {}
-  totalIncome = 25000;
-  totalExpense = 12000;
+export class HomePage implements OnInit {
+  expenses$!: Observable<ExpenseWithCategory[]>;
+  recentTransactions$!: Observable<ExpenseWithCategory[]>;
 
-  get balance() {
-    return this.totalIncome - this.totalExpense;
+  totalIncome = 0;
+  totalExpense = 0;
+  balance = 0;
+
+  constructor(private expenseService: ExpenseService) {}
+
+  ngOnInit() {
+    this.expenses$ = this.expenseService.getExpensesWithCategory();
+
+    // Calculate totals
+    this.expenses$.subscribe((expenses) => {
+      console.log(expenses, 'expenses');
+      this.totalIncome = expenses
+        .filter((e) => e.type === 'in')
+        .reduce((sum, e) => sum + (+e.amount || 0), 0);
+
+      this.totalExpense = expenses
+        .filter((e) => e.type === 'out')
+        .reduce((sum, e) => sum + (+e.amount || 0), 0);
+      this.balance = this.totalIncome - this.totalExpense;
+    });
+
+    // Recent 5 transactions
+    this.recentTransactions$ = this.expenses$.pipe(
+      map((expenses) =>
+        [...expenses]
+          .sort(
+            (a, b) =>
+              new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime(),
+          )
+          .slice(0, 5),
+      ),
+    );
   }
 }

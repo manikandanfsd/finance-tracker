@@ -1,54 +1,130 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Finance Tracker</ion-title>
+    <ion-title class="fw-bold" style="font-weight: 700">Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/main/tabs/reports">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+      <div class="avatar-small">
+        <img
+          src="https://api.dicebear.com/9.x/avataaars/svg?seed=Mithra"
+          alt="User"
+        />
+      </div>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div class="welcome-box">
-    <h2>Welcome back 👋</h2>
-    <p class="sub-text">Let’s manage your money wisely today</p>
+<ion-content class="ion-padding-horizontal">
+  <!-- Welcome Section -->
+  <div class="welcome-section ion-margin-top">
+    <h2 class="ion-no-margin">Hello, User 👋</h2>
+    <p class="ion-no-margin text-medium">Track your spendings seamlessly</p>
   </div>
-  <!-- Balance Card -->
+
+  <!-- Total Balance Card -->
   <ion-card class="balance-card">
-    <h2>Current Balance</h2>
-    <h1>₹ {{ balance }}</h1>
+    <div class="card-content">
+      <p class="label">Total Balance</p>
+      <h1>₹ {{ balance | number:'1.2-2' }}</h1>
+      <!-- <div class="growth-tag">
+        <ion-icon name="trending-up"></ion-icon> 2.5% this month
+      </div> -->
+    </div>
+    <div class="card-decor"></div>
   </ion-card>
 
-  <!-- Summary Cards -->
-  <div class="summary">
-    <ion-card class="income">
-      <p>Income</p>
-      <h3>₹ {{ totalIncome }}</h3>
-    </ion-card>
-
-    <ion-card class="expense">
-      <p>Expense</p>
-      <h3>₹ {{ totalExpense }}</h3>
-    </ion-card>
+  <!-- Income/Expense Summary -->
+  <div class="summary-container">
+    <div class="summary-item income">
+      <div class="icon-box">
+        <ion-icon name="arrow-down-outline"></ion-icon>
+      </div>
+      <div>
+        <p>Income</p>
+        <h3>₹ {{ totalIncome | number:'1.0-0' }}</h3>
+      </div>
+    </div>
+    <div class="summary-item expense">
+      <div class="icon-box">
+        <ion-icon name="arrow-up-outline"></ion-icon>
+      </div>
+      <div>
+        <p>Expense</p>
+        <h3>₹ {{ totalExpense | number:'1.0-0' }}</h3>
+      </div>
+    </div>
   </div>
 
-  <!-- Quick Actions -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Quick Actions</ion-card-title>
-    </ion-card-header>
+  <!-- Quick Actions Title -->
+  <div class="section-header">
+    <h3>Quick Actions</h3>
+  </div>
 
-    <ion-card-content>
-      <ion-button
-        expand="block"
-        color="success"
-        routerLink="/main/tabs/expense"
+  <div class="quick-actions">
+    <div class="action-btn" routerLink="/main/tabs/expense">
+      <div class="btn-icon success-gradient">
+        <ion-icon name="add"></ion-icon>
+      </div>
+      <span>Add Income</span>
+    </div>
+    <div class="action-btn" routerLink="/main/expense">
+      <div class="btn-icon danger-gradient">
+        <ion-icon name="remove"></ion-icon>
+      </div>
+      <span>Add Expense</span>
+    </div>
+    <div class="action-btn" routerLink="/main/tabs/transactions">
+      <div class="btn-icon primary-gradient">
+        <ion-icon name="swap-horizontal"></ion-icon>
+      </div>
+      <span>Transfer</span>
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class="section-header">
+    <h3>Recent Transactions</h3>
+    <ion-button fill="clear" size="small" routerLink="/main/tabs/transactions"
+      >See All</ion-button
+    >
+  </div>
+
+  <div class="recent-list">
+    @for (tx of recentTransactions$ | async; track tx.id) {
+    <ion-item lines="none" class="transaction-item">
+      <div
+        slot="start"
+        class="icon-box"
+        [class.expense-icon]="tx.type === 'out'"
+        [class.income-icon]="tx.type === 'in'"
       >
-        + Add Income
-      </ion-button>
+        <ion-icon
+          [name]="tx.type === 'in' ? 'arrow-down' : 'arrow-up'"
+        ></ion-icon>
+      </div>
+      <ion-label>
+        <h3>{{ tx.category?.name || 'Uncategorized' | titlecase }}</h3>
+        <p>{{ tx.dateTime | date:'mediumDate' }}</p>
+      </ion-label>
+      <div
+        slot="end"
+        class="amount"
+        [class.positive]="tx.type === 'in'"
+        [class.negative]="tx.type === 'out'"
+      >
+        {{ tx.type === 'in' ? '+' : '-' }} ₹ {{ tx.amount }}
+      </div>
+    </ion-item>
+    } @empty {
+    <div class="ion-text-center ion-padding">
+      <p class="text-medium">No recent transactions</p>
+    </div>
+    }
+  </div>
 
-      <ion-button expand="block" color="danger" routerLink="/main/expense">
-        + Add Expense
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+  <!-- <div class="ion-padding-bottom"></div> -->
 </ion-content>
