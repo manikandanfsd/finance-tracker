@@ -14,19 +14,34 @@
 
 <ion-content class="ion-padding-horizontal">
   <div class="filters-container">
-    <ion-chip color="primary" mode="ios" outline="false">
+    <ion-chip
+      [color]="selectedFilter === 'all' ? 'primary' : ''"
+      [outline]="selectedFilter !== 'all'"
+      mode="ios"
+      (click)="setFilter('all')"
+    >
       <ion-label>All</ion-label>
     </ion-chip>
-    <ion-chip mode="ios" outline="true">
+    <ion-chip
+      [color]="selectedFilter === 'in' ? 'primary' : ''"
+      [outline]="selectedFilter !== 'in'"
+      mode="ios"
+      (click)="setFilter('in')"
+    >
       <ion-label>Income</ion-label>
     </ion-chip>
-    <ion-chip mode="ios" outline="true">
+    <ion-chip
+      [color]="selectedFilter === 'out' ? 'primary' : ''"
+      [outline]="selectedFilter !== 'out'"
+      mode="ios"
+      (click)="setFilter('out')"
+    >
       <ion-label>Expense</ion-label>
     </ion-chip>
   </div>
 
   <div class="list-container">
-    @for (tx of expenses$ | async; track tx.id || $index) {
+    @for (tx of filteredExpenses$ | async; track tx.id || $index) {
     <div class="transaction-card">
       <div
         class="icon-wrapper"

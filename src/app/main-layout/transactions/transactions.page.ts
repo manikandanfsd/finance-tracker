@@ -8,7 +8,7 @@ import {
   ExpenseService,
   ExpenseWithCategory,
 } from '../expense/expense.service';
-import { combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-transactions',
@@ -18,12 +18,31 @@ import { combineLatest } from 'rxjs';
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class TransactionsPage implements OnInit {
+  private filterSubject = new BehaviorSubject<'all' | 'in' | 'out'>('all');
+  selectedFilter: 'all' | 'in' | 'out' = 'all';
+
   expenses$ = this.expenseService.getExpensesWithCategory();
+  filteredExpenses$: Observable<ExpenseWithCategory[]>;
 
-  expenseList: ExpenseWithCategory[] = [];
-  categoryObj: Record<string, string> = {};
-
-  constructor(private expenseService: ExpenseService) {}
+  constructor(private expenseService: ExpenseService) {
+    // Combine expenses with filter to create filtered list
+    this.filteredExpenses$ = combineLatest([
+      this.expenses$,
+      this.filterSubject,
+    ]).pipe(
+      map(([expenses, filter]) => {
+        if (filter === 'all') {
+          return expenses;
+        }
+        return expenses.filter((expense) => expense.type === filter);
+      }),
+    );
+  }
 
   ngOnInit() {}
+
+  setFilter(filter: 'all' | 'in' | 'out') {
+    this.selectedFilter = filter;
+    this.filterSubject.next(filter);
+  }
 }
