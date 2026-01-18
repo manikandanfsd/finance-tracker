@@ -1,0 +1,71 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/main/tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="fw-bold" style="font-weight: 700">Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (userInfo) {
+  <div class="profile-container">
+    <!-- Profile Avatar -->
+    <div class="avatar-section">
+      <div class="avatar">
+        <ion-icon name="person"></ion-icon>
+      </div>
+    </div>
+
+    <!-- User Info Card -->
+    <ion-card class="info-card">
+      <ion-card-content>
+        <div class="info-item">
+          <ion-icon name="mail-outline"></ion-icon>
+          <div class="info-details">
+            <p class="label">Email</p>
+            <p class="value">{{ userInfo.email }}</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <div class="info-details">
+            <p class="label">Member Since</p>
+            <p class="value">{{ userInfo.createdAt | date: 'mediumDate' }}</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <ion-icon name="time-outline"></ion-icon>
+          <div class="info-details">
+            <p class="label">Last Login</p>
+            <p class="value">{{ userInfo.lastLogin | date: 'short' }}</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <ion-icon name="key-outline"></ion-icon>
+          <div class="info-details">
+            <p class="label">User ID</p>
+            <p class="value">{{ userInfo.uid }}</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Actions -->
+    <div class="actions-section">
+      <ion-button expand="block" color="danger" (click)="logout()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        Logout
+      </ion-button>
+    </div>
+  </div>
+  } @else {
+  <div class="loading-container">
+    <ion-spinner></ion-spinner>
+    <p>Loading profile...</p>
+  </div>
+  }
+</ion-content>

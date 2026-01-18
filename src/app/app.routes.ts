@@ -7,7 +7,7 @@ export const routes: Routes = [
     path: 'auth',
     loadComponent: () =>
       import('./auth/page/auth-layout/auth-layout.page').then(
-        (m) => m.AuthLayoutComponent
+        (m) => m.AuthLayoutComponent,
       ),
 
     children: [
@@ -21,7 +21,7 @@ export const routes: Routes = [
         path: 'register',
         loadComponent: () =>
           import('./auth/page/register/register.page').then(
-            (m) => m.RegisterPage
+            (m) => m.RegisterPage,
           ),
       },
     ],
@@ -30,7 +30,7 @@ export const routes: Routes = [
     path: 'main',
     loadComponent: () =>
       import('./main-layout/main-layout.page').then(
-        (m) => m.MainLayoutComponent
+        (m) => m.MainLayoutComponent,
       ),
     children: [
       { path: '', redirectTo: 'tabs', pathMatch: 'full' },
@@ -49,31 +49,38 @@ export const routes: Routes = [
             path: 'category',
             loadComponent: () =>
               import('./main-layout/category/category.page').then(
-                (m) => m.CategoryPage
+                (m) => m.CategoryPage,
               ),
           },
           {
             path: 'transactions',
             loadComponent: () =>
               import('./main-layout/transactions/transactions.page').then(
-                (m) => m.TransactionsPage
+                (m) => m.TransactionsPage,
               ),
           },
           {
             path: 'reports',
             loadComponent: () =>
               import('./main-layout/reports/reports.page').then(
-                (m) => m.ReportsPage
+                (m) => m.ReportsPage,
               ),
           },
           {
             path: 'expense',
             loadComponent: () =>
               import('./main-layout/expense/expense.page').then(
-                (m) => m.ExpensePage
+                (m) => m.ExpensePage,
               ),
           },
         ],
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./main-layout/profile/profile.page').then(
+            (m) => m.ProfilePage,
+          ),
       },
     ],
   },

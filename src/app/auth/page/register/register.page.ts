@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -12,7 +12,7 @@ import { AuthService } from '../../service/auth';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage {
+export class RegisterPage implements OnInit {
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
@@ -27,6 +27,14 @@ export class RegisterPage {
     private alertController: AlertController,
     private toastController: ToastController,
   ) {}
+
+  ngOnInit() {
+    // Check if user is already logged in
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
+      this.router.navigate(['/main/tabs/home']);
+    }
+  }
 
   passwordsMatch() {
     return this.form.value.password === this.form.value.confirmPassword;

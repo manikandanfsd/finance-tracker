@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -12,7 +12,7 @@ import { AuthService } from '../../service/auth';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
@@ -28,12 +28,31 @@ export class LoginPage {
     private toastController: ToastController,
   ) {}
 
+  ngOnInit() {
+    // Check if user is already logged in
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
+      this.router.navigate(['/main/tabs/home']);
+    }
+  }
+
   async login() {
     if (this.form.invalid) return;
     this.loading = true;
     try {
       const { email, password } = this.form.value;
-      await this.auth.login(email!, password!);
+      const userCredential = await this.auth.login(email!, password!);
+
+      // Store user info in localStorage
+      const userInfo = {
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+        createdAt:
+          userCredential.user.metadata.creationTime || new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
+      };
+      localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
       this.loading = false;
 
       // Show success toast
