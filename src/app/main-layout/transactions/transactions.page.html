@@ -37,6 +37,12 @@
     </ion-chip>
   </div>
 
+  @if (isLoading) {
+  <div class="loading-container">
+    <ion-spinner color="primary"></ion-spinner>
+    <p>Loading transactions...</p>
+  </div>
+  } @else {
   <div class="list-container">
     @for (tx of filteredExpenses$ | async; track tx.id || $index) {
     <div class="transaction-card">
@@ -71,6 +77,7 @@
     </div>
     }
   </div>
+  }
 
   <div class="ion-padding-bottom"></div>
 </ion-content>

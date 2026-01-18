@@ -46,6 +46,7 @@ export class LoginPage implements OnInit {
       // Store user info in localStorage
       const userInfo = {
         uid: userCredential.user.uid,
+        name: userCredential.user.displayName || undefined,
         email: userCredential.user.email,
         createdAt:
           userCredential.user.metadata.creationTime || new Date().toISOString(),

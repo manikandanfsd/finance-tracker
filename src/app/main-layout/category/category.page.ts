@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from './category.service';
@@ -16,6 +16,8 @@ import { serverTimestamp } from 'firebase/firestore';
 })
 export class CategoryPage {
   categories$ = this.categoryService.getCategories();
+  isLoading = true;
+  isSaving = false;
 
   form = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -24,24 +26,59 @@ export class CategoryPage {
 
   constructor(
     private fb: FormBuilder,
-    private categoryService: CategoryService
-  ) {}
+    private categoryService: CategoryService,
+    private alertController: AlertController,
+  ) {
+    // Track loading state
+    this.categories$.subscribe(() => {
+      this.isLoading = false;
+    });
+  }
 
   async saveCategory() {
     if (this.form.invalid) return;
 
-    const data = {
-      name: this.form.value.name ?? '',
-      budgetAmount: Number(this.form.value.budgetAmount),
-      createdAt: serverTimestamp(),
-    };
+    this.isSaving = true;
+    try {
+      const data = {
+        name: this.form.value.name ?? '',
+        budgetAmount: Number(this.form.value.budgetAmount),
+        createdAt: serverTimestamp(),
+      };
 
-    await this.categoryService.addCategory(data);
-    this.form.reset();
+      await this.categoryService.addCategory(data);
+      this.form.reset();
+    } catch (error) {
+      console.error('Error saving category:', error);
+    } finally {
+      this.isSaving = false;
+    }
   }
 
   deleteCategory(id: string) {
     this.categoryService.deleteCategory(id);
+  }
+
+  async confirmDelete(id: string, name: string) {
+    const alert = await this.alertController.create({
+      header: 'Delete Category',
+      message: `Are you sure you want to delete "${name}"? This action cannot be undone.`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Delete',
+          role: 'destructive',
+          handler: () => {
+            this.deleteCategory(id);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   editCategory(id: string) {

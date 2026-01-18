@@ -25,10 +25,18 @@ export class HomePage implements OnInit {
   totalIncome = 0;
   totalExpense = 0;
   balance = 0;
+  userName = 'User';
 
   constructor(private expenseService: ExpenseService) {}
 
   ngOnInit() {
+    // Load user name from localStorage
+    const userInfoString = localStorage.getItem('userInfo');
+    if (userInfoString) {
+      const userInfo = JSON.parse(userInfoString);
+      this.userName = userInfo.name || 'User';
+    }
+
     this.expenses$ = this.expenseService.getExpensesWithCategory();
 
     // Calculate totals

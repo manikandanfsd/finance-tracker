@@ -2,9 +2,9 @@
   <ion-toolbar color="primary">
     <ion-title class="fw-bold" style="font-weight: 700">Dashboard</ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/main/tabs/reports">
+      <!-- <ion-button routerLink="/main/reports">
         <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
-      </ion-button>
+      </ion-button> -->
       <div class="avatar-small">
         <img
           src="https://api.dicebear.com/9.x/avataaars/svg?seed=Mithra"
@@ -18,7 +18,7 @@
 <ion-content class="ion-padding-horizontal">
   <!-- Welcome Section -->
   <div class="welcome-section ion-margin-top">
-    <h2 class="ion-no-margin">Hello, User 👋</h2>
+    <h2 class="ion-no-margin">Hello, {{ userName }} 👋</h2>
     <p class="ion-no-margin text-medium">Track your spendings seamlessly</p>
   </div>
 
@@ -62,13 +62,21 @@
   </div>
 
   <div class="quick-actions">
-    <div class="action-btn" routerLink="/main/tabs/expense">
+    <div
+      class="action-btn"
+      [routerLink]="['/main/expense']"
+      [queryParams]="{type: 'in'}"
+    >
       <div class="btn-icon success-gradient">
         <ion-icon name="add"></ion-icon>
       </div>
       <span>Add Income</span>
     </div>
-    <div class="action-btn" routerLink="/main/expense">
+    <div
+      class="action-btn"
+      [routerLink]="['/main/expense']"
+      [queryParams]="{type: 'out'}"
+    >
       <div class="btn-icon danger-gradient">
         <ion-icon name="remove"></ion-icon>
       </div>
@@ -85,7 +93,7 @@
   <!-- Recent Transactions -->
   <div class="section-header">
     <h3>Recent Transactions</h3>
-    <ion-button fill="clear" size="small" routerLink="/main/tabs/transactions"
+    <ion-button fill="clear" size="small" routerLink="/main/transactions"
       >See All</ion-button
     >
   </div>

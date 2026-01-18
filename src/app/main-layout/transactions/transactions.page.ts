@@ -20,6 +20,7 @@ import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 export class TransactionsPage implements OnInit {
   private filterSubject = new BehaviorSubject<'all' | 'in' | 'out'>('all');
   selectedFilter: 'all' | 'in' | 'out' = 'all';
+  isLoading = true;
 
   expenses$ = this.expenseService.getExpensesWithCategory();
   filteredExpenses$: Observable<ExpenseWithCategory[]>;
@@ -37,6 +38,11 @@ export class TransactionsPage implements OnInit {
         return expenses.filter((expense) => expense.type === filter);
       }),
     );
+
+    // Subscribe to track loading state
+    this.filteredExpenses$.subscribe(() => {
+      this.isLoading = false;
+    });
   }
 
   ngOnInit() {}

@@ -12,9 +12,13 @@
     <div class="filter-row">
       <ion-datetime-button datetime="date-picker"></ion-datetime-button>
 
-      <ion-button expand="block" color="primary" (click)="loadReport()">
+      <ion-button expand="block" color="primary" (click)="loadReport()" [disabled]="isLoading">
         <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
-        View Report
+        @if (isLoading) {
+          <ion-spinner name="crescent"></ion-spinner>
+        } @else {
+          View Report
+        }
       </ion-button>
     </div>
 
@@ -30,26 +34,37 @@
     </ion-modal>
   </ion-card>
 
-  <!-- Charts -->
-  <div class="chart-section">
-    <div class="section-header">
-      <h3>Distribution</h3>
+  <!-- Empty State -->
+  @if (showReport && !hasData) {
+    <div class="empty-state">
+      <ion-icon name="bar-chart-outline" color="medium"></ion-icon>
+      <h3>No Data Found</h3>
+      <p>No transactions found for the selected month.</p>
     </div>
-    <ion-card class="chart-card">
-      <div class="chart-wrapper">
-        <canvas #chartCanvas></canvas>
-      </div>
-    </ion-card>
+  }
 
-    <div class="section-header">
-      <h3>Monthly Trend</h3>
-    </div>
-    <ion-card class="chart-card">
-      <div class="chart-wrapper">
-        <canvas #monthlyChart></canvas>
+  <!-- Charts -->
+  @if (showReport && hasData) {
+    <div class="chart-section">
+      <div class="section-header">
+        <h3>Distribution</h3>
       </div>
-    </ion-card>
-  </div>
+      <ion-card class="chart-card">
+        <div class="chart-wrapper">
+          <canvas #chartCanvas></canvas>
+        </div>
+      </ion-card>
+
+      <div class="section-header">
+        <h3>Monthly Trend</h3>
+      </div>
+      <ion-card class="chart-card">
+        <div class="chart-wrapper">
+          <canvas #monthlyChart></canvas>
+        </div>
+      </ion-card>
+    </div>
+  }
 
   <div class="ion-padding-bottom"></div>
 </ion-content>

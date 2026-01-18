@@ -14,6 +14,8 @@ import {
   barChartOutline,
   calendarOutline,
   cashOutline,
+  chatboxOutline,
+  checkboxOutline,
   checkmarkCircleOutline,
   createOutline,
   documentsOutline,
@@ -30,10 +32,13 @@ import {
   logOutOutline,
   mailOutline,
   menu,
+  notificationsOutline,
+  pencilOutline,
   person,
   personAdd,
   personOutline,
   playCircle,
+  pricetagOutline,
   radio,
   readerOutline,
   remove,
@@ -45,6 +50,7 @@ import {
   trashOutline,
   trendingUp,
   wallet,
+  walletOutline,
 } from 'ionicons/icons';
 import {
   RouteReuseStrategy,
@@ -104,6 +110,11 @@ addIcons({
   keyOutline,
   mailOutline,
   person,
+  pencilOutline,
+  notificationsOutline,
+  pricetagOutline,
+  walletOutline,
+  chatboxOutline,
 });
 
 bootstrapApplication(AppComponent, {

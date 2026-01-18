@@ -35,11 +35,14 @@
         <ion-button
           expand="block"
           (click)="saveCategory()"
-          [disabled]="form.invalid"
+          [disabled]="form.invalid || isSaving"
           class="save-btn"
         >
+          @if (isSaving) {
+          <ion-spinner name="crescent"></ion-spinner>
+          } @else {
           <ion-icon slot="start" name="add-circle-outline"></ion-icon>
-          Add
+          Add }
         </ion-button>
       </form>
     </ion-card-content>
@@ -50,6 +53,12 @@
     <h3>Existing Categories</h3>
   </div>
 
+  @if (isLoading) {
+  <div class="loading-container">
+    <ion-spinner color="primary"></ion-spinner>
+    <p>Loading categories...</p>
+  </div>
+  } @else {
   <div class="category-list">
     @for (cat of categories$ | async; track cat.id) {
     <div class="category-item">
@@ -60,7 +69,11 @@
         <h4>{{ cat.name }}</h4>
         <p>Budget: ₹{{ cat.budgetAmount || '0' }}</p>
       </div>
-      <ion-button fill="clear" color="danger" (click)="deleteCategory(cat.id!)">
+      <ion-button
+        fill="clear"
+        color="danger"
+        (click)="confirmDelete(cat.id!, cat.name)"
+      >
         <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
       </ion-button>
     </div>
@@ -70,6 +83,7 @@
     </div>
     }
   </div>
+  }
 
   <div class="ion-padding-bottom"></div>
 </ion-content>

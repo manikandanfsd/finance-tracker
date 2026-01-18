@@ -1,8 +1,8 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-back-button defaultHref="/main/tabs/home"></ion-back-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-title class="fw-bold" style="font-weight: 700">Profile</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,6 +20,17 @@
     <!-- User Info Card -->
     <ion-card class="info-card">
       <ion-card-content>
+        <div class="info-item">
+          <ion-icon name="person-outline"></ion-icon>
+          <div class="info-details">
+            <p class="label">Name</p>
+            <p class="value">{{ userInfo.name || 'Not set' }}</p>
+          </div>
+          <ion-button fill="clear" size="small" (click)="editName()">
+            <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+          </ion-button>
+        </div>
+
         <div class="info-item">
           <ion-icon name="mail-outline"></ion-icon>
           <div class="info-details">
