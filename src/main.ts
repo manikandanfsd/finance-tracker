@@ -21,6 +21,7 @@ import {
   listOutline,
   logOutOutline,
   menu,
+  personAdd,
   personOutline,
   playCircle,
   radio,
@@ -72,6 +73,7 @@ addIcons({
   gridOutline,
   wallet,
   checkmarkCircleOutline,
+  personAdd,
 });
 
 bootstrapApplication(AppComponent, {

@@ -1,71 +1,84 @@
 <ion-content>
-  <img src="assets/img/register.jpg" class="logo" width="100%" />
-  <div class="auth-container">
-    <ion-card-header>
-      <ion-card-title>Create Account 🚀</ion-card-title>
-      <ion-card-subtitle>Start tracking your finance</ion-card-subtitle>
-    </ion-card-header>
+  <div class="login-container">
+    <div class="header-section">
+      <div
+        class="logo-icon"
+        style="
+          color: var(--ion-color-secondary);
+          background: rgba(var(--ion-color-secondary-rgb), 0.1);
+        "
+      >
+        <ion-icon name="person-add"></ion-icon>
+      </div>
+      <h1>Create Account</h1>
+      <p>Join us to start your financial journey</p>
+    </div>
 
-    <ion-card-content>
-      <form [formGroup]="form">
-        <div class="form-item">
-          <ion-input
-            label="Email"
-            labelPlacement="floating"
-            formControlName="email"
-            fill="outline"
-          >
-          </ion-input>
-          @if (form.get('email')?.touched && form.get('email')?.invalid) {
-          <ion-text color="danger"> Enter a valid email </ion-text>
-          }
-        </div>
+    <form [formGroup]="form" class="auth-form">
+      <div class="form-item">
+        <ion-input
+          label="Email Address"
+          labelPlacement="stacked"
+          mode="md"
+          fill="outline"
+          placeholder="your@email.com"
+          formControlName="email"
+        >
+        </ion-input>
+        @if (form.get('email')?.touched && form.get('email')?.invalid) {
+        <ion-text color="danger">Please enter a valid email</ion-text>
+        }
+      </div>
 
-        <div class="form-item">
-          <ion-input
-            type="password"
-            label="Password"
-            labelPlacement="floating"
-            formControlName="password"
-            fill="outline"
-          >
-          </ion-input>
-          @if (form.get('password')?.touched && form.get('password')?.invalid) {
-          <ion-text color="danger">
-            Password must be at least 6 characters
-          </ion-text>
-          }
-        </div>
+      <div class="form-item">
+        <ion-input
+          type="password"
+          label="Password"
+          labelPlacement="stacked"
+          mode="md"
+          fill="outline"
+          placeholder="Password"
+          formControlName="password"
+        >
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+        @if (form.get('password')?.touched && form.get('password')?.invalid) {
+        <ion-text color="danger">Min 6 characters required</ion-text>
+        }
+      </div>
 
-        <div class="form-item">
-          <ion-input
-            type="password"
-            label="Confirm Password"
-            labelPlacement="floating"
-            formControlName="confirmPassword"
-            fill="outline"
-          >
-          </ion-input>
+      <div class="form-item">
+        <ion-input
+          type="password"
+          label="Confirm Password"
+          labelPlacement="stacked"
+          mode="md"
+          fill="outline"
+          placeholder="Confirm Password"
+          formControlName="confirmPassword"
+        >
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
 
-          @if(!passwordsMatch() && form.touched){
-          <ion-text color="danger"> Passwords do not match </ion-text>
-          } @if (form.get('password')?.touched && form.get('password')?.invalid)
-          {
-          <ion-text color="danger">
-            Password must be at least 6 characters
-          </ion-text>
-          }
-        </div>
+        @if(!passwordsMatch() && form.touched){
+        <ion-text color="danger">Passwords do not match</ion-text>
+        }
+      </div>
 
-        <ion-button expand="block" class="auth-btn" (click)="register()">
-          Register
-        </ion-button>
-      </form>
+      <ion-button
+        expand="block"
+        class="auth-btn"
+        color="secondary"
+        [disabled]="form.invalid || loading"
+        (click)="register()"
+      >
+        Register
+      </ion-button>
+    </form>
 
-      <p class="switch">
-        Already have an account?
-        <a routerLink="/auth/login">Login</a>
-      </p>
-    </ion-card-content>
+    <p class="switch">
+      Already have an account? <br />
+      <a routerLink="/auth/login">Login here</a>
+    </p>
   </div>
 </ion-content>
