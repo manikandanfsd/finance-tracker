@@ -12,13 +12,16 @@
     <div class="filter-row">
       <ion-datetime-button datetime="date-picker"></ion-datetime-button>
 
-      <ion-button expand="block" color="primary" (click)="loadReport()" [disabled]="isLoading">
+      <ion-button
+        expand="block"
+        color="primary"
+        (click)="loadReport()"
+        [disabled]="isLoading"
+      >
         <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
         @if (isLoading) {
-          <ion-spinner name="crescent"></ion-spinner>
-        } @else {
-          View Report
-        }
+        <ion-spinner name="crescent"></ion-spinner>
+        } @else { View Report }
       </ion-button>
     </div>
 
@@ -36,34 +39,99 @@
 
   <!-- Empty State -->
   @if (showReport && !hasData) {
-    <div class="empty-state">
-      <ion-icon name="bar-chart-outline" color="medium"></ion-icon>
-      <h3>No Data Found</h3>
-      <p>No transactions found for the selected month.</p>
-    </div>
+  <div class="empty-state">
+    <ion-icon name="bar-chart-outline" color="medium"></ion-icon>
+    <h3>No Data Found</h3>
+    <p>No transactions found for the selected month.</p>
+  </div>
   }
 
   <!-- Charts -->
   @if (showReport && hasData) {
-    <div class="chart-section">
-      <div class="section-header">
-        <h3>Distribution</h3>
-      </div>
-      <ion-card class="chart-card">
-        <div class="chart-wrapper">
-          <canvas #chartCanvas></canvas>
+  <!-- Summary Cards -->
+  <div class="summary-cards" style="display: none">
+    <ion-card class="summary-card income-card">
+      <ion-card-content>
+        <div class="card-icon">
+          <ion-icon name="trending-up"></ion-icon>
         </div>
-      </ion-card>
+        <div class="card-info">
+          <p class="card-label">Total Income</p>
+          <h2 class="card-value">${{ totalIncome.toFixed(2) }}</h2>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-      <div class="section-header">
-        <h3>Monthly Trend</h3>
-      </div>
-      <ion-card class="chart-card">
-        <div class="chart-wrapper">
-          <canvas #monthlyChart></canvas>
+    <ion-card class="summary-card expense-card">
+      <ion-card-content>
+        <div class="card-icon">
+          <ion-icon name="trending-down"></ion-icon>
         </div>
-      </ion-card>
+        <div class="card-info">
+          <p class="card-label">Total Expense</p>
+          <h2 class="card-value">${{ totalExpense.toFixed(2) }}</h2>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card
+      class="summary-card balance-card"
+      [ngClass]="{'negative': netBalance < 0}"
+    >
+      <ion-card-content>
+        <div class="card-icon">
+          <ion-icon
+            [name]="netBalance >= 0 ? 'wallet' : 'alert-circle'"
+          ></ion-icon>
+        </div>
+        <div class="card-info">
+          <p class="card-label">Net Balance</p>
+          <h2 class="card-value">${{ netBalance.toFixed(2) }}</h2>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="summary-card savings-card">
+      <ion-card-content>
+        <div class="card-icon">
+          <ion-icon name="stats-chart"></ion-icon>
+        </div>
+        <div class="card-info">
+          <p class="card-label">Savings Rate</p>
+          <h2 class="card-value">{{ savingsRate.toFixed(1) }}%</h2>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="chart-section">
+    <div class="section-header">
+      <h3>Expense Distribution</h3>
     </div>
+    <ion-card class="chart-card">
+      <div class="chart-wrapper">
+        <canvas #chartCanvas></canvas>
+      </div>
+    </ion-card>
+
+    <div class="section-header">
+      <h3>Monthly Comparison</h3>
+    </div>
+    <ion-card class="chart-card">
+      <div class="chart-wrapper">
+        <canvas #monthlyChart></canvas>
+      </div>
+    </ion-card>
+
+    <div class="section-header">
+      <h3>Trend Analysis</h3>
+    </div>
+    <ion-card class="chart-card">
+      <div class="chart-wrapper">
+        <canvas #trendChart></canvas>
+      </div>
+    </ion-card>
+  </div>
   }
 
   <div class="ion-padding-bottom"></div>

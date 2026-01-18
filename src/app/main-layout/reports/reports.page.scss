@@ -27,6 +27,124 @@
   }
 }
 
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  margin: 0;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  ion-card-content {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    ion-icon {
+      font-size: 24px;
+      color: white;
+    }
+  }
+
+  .card-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ion-color-medium);
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .card-value {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &.income-card {
+    .card-icon {
+      background: linear-gradient(135deg, #4bc0c0 0%, #36a2a2 100%);
+    }
+    .card-value {
+      color: #4bc0c0;
+    }
+  }
+
+  &.expense-card {
+    .card-icon {
+      background: linear-gradient(135deg, #ff6384 0%, #ff4564 100%);
+    }
+    .card-value {
+      color: #ff6384;
+    }
+  }
+
+  &.balance-card {
+    .card-icon {
+      background: linear-gradient(135deg, #36a2eb 0%, #2080d0 100%);
+    }
+    .card-value {
+      color: #36a2eb;
+    }
+
+    &.negative {
+      .card-icon {
+        background: linear-gradient(135deg, #ff9f40 0%, #ff8520 100%);
+      }
+      .card-value {
+        color: #ff9f40;
+      }
+    }
+  }
+
+  &.savings-card {
+    .card-icon {
+      background: linear-gradient(135deg, #9966ff 0%, #7845dd 100%);
+    }
+    .card-value {
+      color: #9966ff;
+    }
+  }
+}
+
+@media (max-width: 380px) {
+  .summary-cards {
+    gap: 8px;
+  }
+
+  .summary-card {
+    .card-value {
+      font-size: 18px;
+    }
+    .card-label {
+      font-size: 10px;
+    }
+  }
+}
+
 .chart-card {
   margin-inline: 0;
   margin-bottom: 24px;
