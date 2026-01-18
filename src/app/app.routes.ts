@@ -1,8 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'main', pathMatch: 'full' },
-
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
   {
     path: 'auth',
     loadComponent: () =>
@@ -33,47 +32,39 @@ export const routes: Routes = [
         (m) => m.MainLayoutComponent,
       ),
     children: [
-      { path: '', redirectTo: 'tabs', pathMatch: 'full' },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
-        path: 'tabs',
+        path: 'home',
         loadComponent: () =>
-          import('./main-layout/tabs/tabs.page').then((m) => m.TabsPage),
-        children: [
-          { path: '', redirectTo: 'home', pathMatch: 'full' },
-          {
-            path: 'home',
-            loadComponent: () =>
-              import('./main-layout/home/home.page').then((m) => m.HomePage),
-          },
-          {
-            path: 'category',
-            loadComponent: () =>
-              import('./main-layout/category/category.page').then(
-                (m) => m.CategoryPage,
-              ),
-          },
-          {
-            path: 'transactions',
-            loadComponent: () =>
-              import('./main-layout/transactions/transactions.page').then(
-                (m) => m.TransactionsPage,
-              ),
-          },
-          {
-            path: 'reports',
-            loadComponent: () =>
-              import('./main-layout/reports/reports.page').then(
-                (m) => m.ReportsPage,
-              ),
-          },
-          {
-            path: 'expense',
-            loadComponent: () =>
-              import('./main-layout/expense/expense.page').then(
-                (m) => m.ExpensePage,
-              ),
-          },
-        ],
+          import('./main-layout/home/home.page').then((m) => m.HomePage),
+      },
+      {
+        path: 'category',
+        loadComponent: () =>
+          import('./main-layout/category/category.page').then(
+            (m) => m.CategoryPage,
+          ),
+      },
+      {
+        path: 'transactions',
+        loadComponent: () =>
+          import('./main-layout/transactions/transactions.page').then(
+            (m) => m.TransactionsPage,
+          ),
+      },
+      {
+        path: 'reports',
+        loadComponent: () =>
+          import('./main-layout/reports/reports.page').then(
+            (m) => m.ReportsPage,
+          ),
+      },
+      {
+        path: 'expense',
+        loadComponent: () =>
+          import('./main-layout/expense/expense.page').then(
+            (m) => m.ExpensePage,
+          ),
       },
       {
         path: 'profile',
