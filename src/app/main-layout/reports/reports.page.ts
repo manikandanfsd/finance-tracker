@@ -19,41 +19,26 @@ export class ReportsPage implements AfterViewInit {
   monthlyChartRef!: Chart;
   chart!: Chart;
 
-  selectedMonth = new Date().getMonth();
-  selectedYear = new Date().getFullYear();
-
-  months = [
-    { label: 'Jan', value: 0 },
-    { label: 'Feb', value: 1 },
-    { label: 'Mar', value: 2 },
-    { label: 'Apr', value: 3 },
-    { label: 'May', value: 4 },
-    { label: 'Jun', value: 5 },
-    { label: 'Jul', value: 6 },
-    { label: 'Aug', value: 7 },
-    { label: 'Sep', value: 8 },
-    { label: 'Oct', value: 9 },
-    { label: 'Nov', value: 10 },
-    { label: 'Dec', value: 11 },
-  ];
-
-  years = [2024, 2025, 2026];
+  selectedDate: string = new Date().toISOString();
+  maxDate: string = new Date().toISOString();
 
   constructor(private expenseService: ExpenseService) {}
 
   ngAfterViewInit() {
     this.loadReport();
-    this.loadMonthlyChart(this.selectedYear);
+    this.loadMonthlyChart(new Date(this.selectedDate).getFullYear());
   }
 
   loadReport() {
+    const selectedDateObj = new Date(this.selectedDate);
+    const selectedMonth = selectedDateObj.getMonth();
+    const selectedYear = selectedDateObj.getFullYear();
+
     this.expenseService.getExpensesWithCategory().subscribe((expenses) => {
       const filtered = expenses.filter((e: any) => {
-        // Use dateTime which is the user-selected date
         const d = new Date(e.dateTime);
         return (
-          d.getMonth() === this.selectedMonth &&
-          d.getFullYear() === this.selectedYear
+          d.getMonth() === selectedMonth && d.getFullYear() === selectedYear
         );
       });
 
@@ -65,6 +50,9 @@ export class ReportsPage implements AfterViewInit {
 
       this.renderChart(Object.keys(categoryMap), Object.values(categoryMap));
     });
+
+    // Update monthly chart for the selected year
+    this.loadMonthlyChart(selectedYear);
   }
 
   loadMonthlyChart(year: number) {

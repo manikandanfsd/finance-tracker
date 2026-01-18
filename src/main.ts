@@ -11,6 +11,7 @@ import {
   arrowDownOutline,
   arrowUp,
   arrowUpOutline,
+  barChartOutline,
   calendarOutline,
   cashOutline,
   checkmarkCircleOutline,
@@ -96,6 +97,7 @@ addIcons({
   folderOpenOutline,
   trashOutline,
   addCircleOutline,
+  barChartOutline,
 });
 
 bootstrapApplication(AppComponent, {

@@ -13,32 +13,24 @@
   <!-- Filters Card -->
   <ion-card class="filters-card">
     <div class="filter-row">
-      <ion-select
-        fill="outline"
-        label="Month"
-        labelPlacement="stacked"
-        [(ngModel)]="selectedMonth"
-        (ionChange)="loadReport()"
-        interface="popover"
-      >
-        <ion-select-option *ngFor="let m of months" [value]="m.value">
-          {{ m.label }}
-        </ion-select-option>
-      </ion-select>
+      <ion-datetime-button datetime="date-picker"></ion-datetime-button>
 
-      <ion-select
-        fill="outline"
-        label="Year"
-        labelPlacement="stacked"
-        [(ngModel)]="selectedYear"
-        (ionChange)="loadReport()"
-        interface="popover"
-      >
-        <ion-select-option *ngFor="let y of years" [value]="y">
-          {{ y }}
-        </ion-select-option>
-      </ion-select>
+      <ion-button expand="block" color="primary" (click)="loadReport()">
+        <ion-icon slot="start" name="bar-chart-outline"></ion-icon>
+        View Report
+      </ion-button>
     </div>
+
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime
+          id="date-picker"
+          presentation="month-year"
+          [(ngModel)]="selectedDate"
+          [max]="maxDate"
+        ></ion-datetime>
+      </ng-template>
+    </ion-modal>
   </ion-card>
 
   <!-- Charts -->
