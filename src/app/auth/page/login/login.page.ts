@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -23,21 +23,47 @@ export class LoginPage {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController,
+    private toastController: ToastController,
   ) {}
 
   async login() {
     if (this.form.invalid) return;
-
     this.loading = true;
     try {
       const { email, password } = this.form.value;
       await this.auth.login(email!, password!);
+      this.loading = false;
+
+      // Show success toast
+      await this.showSuccessToast();
+
       this.router.navigate(['/main/tabs']);
     } catch (err: any) {
-      alert(err.message);
-    } finally {
       this.loading = false;
+      // Show error alert
+      await this.showErrorAlert('Invalid username or password');
     }
+  }
+
+  async showErrorAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Login Failed',
+      message: message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
+  async showSuccessToast() {
+    const toast = await this.toastController.create({
+      message: 'Login successful!',
+      duration: 2000,
+      position: 'top',
+      color: 'success',
+      icon: 'checkmark-circle-outline',
+    });
+    await toast.present();
   }
 }

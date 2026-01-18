@@ -7,6 +7,7 @@ import {
   addOutline,
   calendarOutline,
   cashOutline,
+  checkmarkCircleOutline,
   createOutline,
   documentsOutline,
   documentTextOutline,
@@ -28,6 +29,7 @@ import {
   search,
   statsChartOutline,
   trash,
+  wallet,
 } from 'ionicons/icons';
 import {
   RouteReuseStrategy,
@@ -68,6 +70,8 @@ addIcons({
   statsChartOutline,
   readerOutline,
   gridOutline,
+  wallet,
+  checkmarkCircleOutline,
 });
 
 bootstrapApplication(AppComponent, {

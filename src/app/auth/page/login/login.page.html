@@ -1,57 +1,62 @@
-<ion-content class="login-container">
-  <img src="assets/img/login.jpg" alt="App Logo" class="logo" width="100%" />
-  <ion-card-header>
-    <ion-card-title>Welcome Back 👋</ion-card-title>
-    <ion-card-subtitle>Login to manage your expenses</ion-card-subtitle>
-  </ion-card-header>
+<ion-content>
+  <div class="login-container">
+    <div class="header-section">
+      <div class="logo-icon">
+        <ion-icon name="wallet"></ion-icon>
+      </div>
+      <h1>Welcome Back</h1>
+      <p>Sign in to continue tracking your finance</p>
+    </div>
 
-  <ion-card-content>
-    <form [formGroup]="form">
+    <form [formGroup]="form" class="auth-form">
       <div class="form-item">
         <ion-input
-          label="Email"
-          labelPlacement="floating"
-          formControlName="email"
+          label="Email Address"
+          labelPlacement="stacked"
+          mode="md"
           fill="outline"
+          placeholder="your@email.com"
+          formControlName="email"
         >
         </ion-input>
         @if (form.get('email')?.touched && form.get('email')?.invalid) {
-        <ion-text color="danger"> Enter a valid email </ion-text>
+        <ion-text color="danger">Please enter a valid email</ion-text>
         }
       </div>
+
       <div class="form-item">
         <ion-input
           type="password"
           label="Password"
-          labelPlacement="floating"
-          formControlName="password"
+          labelPlacement="stacked"
+          mode="md"
           fill="outline"
+          placeholder="••••••••"
+          formControlName="password"
         >
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
         </ion-input>
         @if (form.get('password')?.touched && form.get('password')?.invalid) {
-        <ion-text color="danger">
-          Password must be at least 6 characters
-        </ion-text>
+        <ion-text color="danger">Password is required (min 6 chars)</ion-text>
         }
       </div>
 
       <ion-button
         expand="block"
         class="auth-btn"
+        color="primary"
         [disabled]="form.invalid || loading"
         (click)="login()"
       >
         @if (loading) {
-        <ion-spinner></ion-spinner>
-        } @else {
-        <span>Login</span>
-        }
+        <ion-spinner name="crescent"></ion-spinner>
+        } @else { Login }
       </ion-button>
     </form>
 
     <p class="switch">
-      New user?
-      <a routerLink="/auth/register"> Create account </a>
+      Don't have an account? <br />
+      <a routerLink="/auth/register">Create one now</a>
     </p>
-  </ion-card-content>
+  </div>
 </ion-content>
