@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Category, CategoryService } from '../category/category.service';
-import { Expense, ExpenseService } from '../expense/expense.service';
+import {
+  Expense,
+  ExpenseService,
+  ExpenseWithCategory,
+} from '../expense/expense.service';
 import { combineLatest } from 'rxjs';
 
 @Component({
@@ -14,33 +18,12 @@ import { combineLatest } from 'rxjs';
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class TransactionsPage implements OnInit {
-  expenses$ = this.expenseService.getExpenses();
+  expenses$ = this.expenseService.getExpensesWithCategory();
 
-  expenseList: Expense[] = [];
+  expenseList: ExpenseWithCategory[] = [];
   categoryObj: Record<string, string> = {};
 
-  constructor(
-    private expenseService: ExpenseService,
-    private categoryService: CategoryService
-  ) {}
+  constructor(private expenseService: ExpenseService) {}
 
-  ngOnInit() {
-    this.expenseService.getExpenses().subscribe((data) => {
-      this.expenseList = data;
-    });
-
-    this.categoryService.getCategories().subscribe((data: Category[]) => {
-      data.forEach((cat) => {
-        const key = cat.id || cat.name;
-        this.categoryObj[key] = cat.name;
-      });
-    });
-  }
-}
-function getExpenses(): any {
-  throw new Error('Function not implemented.');
-}
-
-function getCategories(): any {
-  throw new Error('Function not implemented.');
+  ngOnInit() {}
 }

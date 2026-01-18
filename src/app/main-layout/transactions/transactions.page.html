@@ -1,29 +1,64 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Transactions</ion-title>
+    <ion-title class="fw-bold" style="font-weight: 700">Transactions</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    @for (tx of expenses$ | async; track tx.id || $index) {
-    <ion-item>
-      <ion-label>
-        <h3>{{ categoryObj[tx.category] | titlecase }}</h3>
-        <p>{{ tx.remarks | titlecase }}</p>
-        <ion-note>{{ tx.dateTime | date: 'mediumDate' }}</ion-note>
-      </ion-label>
-      <ion-text
-        slot="end"
-        color="{{ tx.type === 'in' ? 'success' : 'danger' }}"
-      >
-        {{tx.type === 'in' ? '+' : '-'}} ₹{{ tx.amount }}</ion-text
-      >
-    </ion-item>
+<ion-content class="ion-padding-horizontal">
+  <div class="filters-container">
+    <ion-chip color="primary" mode="ios" outline="false">
+      <ion-label>All</ion-label>
+    </ion-chip>
+    <ion-chip mode="ios" outline="true">
+      <ion-label>Income</ion-label>
+    </ion-chip>
+    <ion-chip mode="ios" outline="true">
+      <ion-label>Expense</ion-label>
+    </ion-chip>
+  </div>
 
+  <div class="list-container">
+    @for (tx of expenses$ | async; track tx.id || $index) {
+    <div class="transaction-card">
+      <div
+        class="icon-wrapper"
+        [class.income]="tx.type === 'in'"
+        [class.expense]="tx.type === 'out'"
+      >
+        <ion-icon
+          [name]="tx.type === 'in' ? 'arrow-down' : 'arrow-up'"
+        ></ion-icon>
+      </div>
+      <div class="details">
+        <h4>{{ tx.category?.name || 'Uncategorized' | titlecase }}</h4>
+        <p>{{ tx.remarks | titlecase }}</p>
+        <span class="date">{{ tx.dateTime | date: 'mediumDate' }}</span>
+      </div>
+      <div
+        class="amount"
+        [class.positive]="tx.type === 'in'"
+        [class.negative]="tx.type === 'out'"
+      >
+        {{ tx.type === 'in' ? '+' : '-' }} ₹{{ tx.amount | number:'1.0-0' }}
+      </div>
+    </div>
+    } @empty {
+    <div class="empty-state">
+      <div class="empty-icon">
+        <ion-icon name="documents-outline"></ion-icon>
+      </div>
+      <p>No transactions found</p>
+    </div>
     }
-  </ion-list>
+  </div>
+
+  <div class="ion-padding-bottom"></div>
 </ion-content>

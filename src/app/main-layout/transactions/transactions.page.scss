@@ -1,0 +1,124 @@
+@import "../../../theme/variables.scss";
+
+// Filters
+.filters-container {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  ion-chip {
+    margin: 0;
+    --background: var(--ion-color-light);
+    color: var(--ion-color-medium);
+    font-weight: 500;
+    border: 1px solid transparent;
+
+    &.chip-solid {
+      background: var(--ion-color-primary);
+      color: white;
+      --background: var(--ion-color-primary);
+      color: white;
+    }
+  }
+}
+
+// Transaction List
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.transaction-card {
+  background: var(--ion-card-background, #fff);
+  padding: 16px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  .icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+
+    &.income {
+      background: rgba(var(--ion-color-success-rgb), 0.1);
+      color: var(--ion-color-success);
+    }
+
+    &.expense {
+      background: rgba(var(--ion-color-danger-rgb), 0.1);
+      color: var(--ion-color-danger);
+    }
+  }
+
+  .details {
+    flex: 1;
+
+    h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+    }
+
+    p {
+      font-size: 13px;
+      color: var(--ion-color-medium);
+      margin: 0;
+    }
+
+    .date {
+      font-size: 11px;
+      color: var(--ion-color-medium);
+      opacity: 0.7;
+    }
+  }
+
+  .amount {
+    font-size: 16px;
+    font-weight: 700;
+
+    &.positive {
+      color: var(--ion-color-success);
+    }
+    &.negative {
+      color: var(--ion-color-danger);
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+
+  .empty-icon {
+    font-size: 64px;
+    color: var(--ion-color-light-shade);
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 16px;
+    color: var(--ion-color-medium);
+  }
+}
