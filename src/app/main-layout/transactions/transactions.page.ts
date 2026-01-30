@@ -19,23 +19,43 @@ import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 })
 export class TransactionsPage implements OnInit {
   private filterSubject = new BehaviorSubject<'all' | 'in' | 'out'>('all');
+  private searchSubject = new BehaviorSubject<string>('');
   selectedFilter: 'all' | 'in' | 'out' = 'all';
+  searchTerm = '';
+  showSearch = false;
   isLoading = true;
 
   expenses$ = this.expenseService.getExpensesWithCategory();
   filteredExpenses$: Observable<ExpenseWithCategory[]>;
 
   constructor(private expenseService: ExpenseService) {
-    // Combine expenses with filter to create filtered list
+    // Combine expenses with filter and search to create filtered list
     this.filteredExpenses$ = combineLatest([
       this.expenses$,
       this.filterSubject,
+      this.searchSubject,
     ]).pipe(
-      map(([expenses, filter]) => {
-        if (filter === 'all') {
-          return expenses;
+      map(([expenses, filter, search]) => {
+        let filtered = expenses;
+
+        // Apply type filter
+        if (filter !== 'all') {
+          filtered = filtered.filter((expense) => expense.type === filter);
         }
-        return expenses.filter((expense) => expense.type === filter);
+
+        // Apply search filter
+        if (search.trim()) {
+          const searchLower = search.toLowerCase();
+          filtered = filtered.filter(
+            (expense) =>
+              expense.category?.name.toLowerCase().includes(searchLower) ||
+              expense.remarks?.toLowerCase().includes(searchLower) ||
+              expense.amount.toString().includes(search) ||
+              expense.paymentMode.toLowerCase().includes(searchLower),
+          );
+        }
+
+        return filtered;
       }),
     );
 
@@ -50,5 +70,23 @@ export class TransactionsPage implements OnInit {
   setFilter(filter: 'all' | 'in' | 'out') {
     this.selectedFilter = filter;
     this.filterSubject.next(filter);
+  }
+
+  toggleSearch() {
+    this.showSearch = !this.showSearch;
+    if (!this.showSearch) {
+      this.clearSearch();
+    }
+  }
+
+  onSearchChange(event: any) {
+    const value = event.detail.value || '';
+    this.searchTerm = value;
+    this.searchSubject.next(value);
+  }
+
+  clearSearch() {
+    this.searchTerm = '';
+    this.searchSubject.next('');
   }
 }

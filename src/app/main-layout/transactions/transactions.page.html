@@ -1,11 +1,18 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-title class="fw-bold" style="font-weight: 700">Transactions</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>Transactions</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearchChange($event)"
+      (ionClear)="clearSearch()"
+      [debounce]="500"
+      placeholder="Search..."
+      mode="ios"
+      animated="true"
+      show-clear-button="focus"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
