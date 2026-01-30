@@ -8,9 +8,12 @@ import {
   doc,
   collectionData,
   serverTimestamp,
+  query,
+  where,
 } from '@angular/fire/firestore';
 import { map, combineLatest, Observable } from 'rxjs';
-import { Category } from '../category/category.service';
+import { Category, CategoryService } from '../category/category.service';
+import { AuthService } from 'src/app/auth/service/auth';
 
 export interface Expense {
   id?: string;
@@ -20,6 +23,7 @@ export interface Expense {
   remarks: string | null;
   category: string;
   paymentMode: string;
+  userId: string;
   createdAt?: Date;
 }
 
@@ -33,12 +37,19 @@ export interface ExpenseWithCategory extends Omit<Expense, 'category'> {
 export class ExpenseService {
   private expenseRef = collection(this.firestore, 'expenses');
 
-  constructor(private firestore: Firestore) {}
+  private userId = this.authService.getUserInfo()?.uid || '';
+
+  constructor(
+    private firestore: Firestore,
+    private authService: AuthService,
+    private categoryService: CategoryService,
+  ) {}
 
   // ➕ ADD EXPENSE
   addExpense(data: Expense) {
     return addDoc(this.expenseRef, {
       ...data,
+      userId: this.userId,
       createdAt: serverTimestamp(),
     });
   }
@@ -59,19 +70,32 @@ export class ExpenseService {
   }
 
   // 📥 GET ALL EXPENSES
-  getExpenses(): Observable<Expense[]> {
-    return collectionData(this.expenseRef, {
+  getExpenses(startDate?: string, endDate?: string): Observable<Expense[]> {
+    const constraints = [where('userId', '==', this.userId)];
+
+    if (startDate) {
+      constraints.push(where('dateTime', '>=', startDate));
+    }
+    if (endDate) {
+      constraints.push(where('dateTime', '<=', endDate));
+    }
+
+    const expenseQuery = query(this.expenseRef, ...constraints);
+
+    return collectionData(expenseQuery, {
       idField: 'id',
     }) as Observable<Expense[]>;
   }
 
-  getExpensesWithCategory(): Observable<ExpenseWithCategory[]> {
-    const categories$ = collectionData(
-      collection(this.firestore, 'categories'),
-      { idField: 'id' },
-    );
-
-    return combineLatest([this.getExpenses(), categories$]).pipe(
+  getExpensesWithCategory(
+    startDate?: string,
+    endDate?: string,
+  ): Observable<ExpenseWithCategory[]> {
+    const categories$ = this.categoryService.getCategories();
+    return combineLatest([
+      this.getExpenses(startDate, endDate),
+      categories$,
+    ]).pipe(
       map(([expenses, categories]: any[]) =>
         expenses.map((exp: Expense) => ({
           ...exp,

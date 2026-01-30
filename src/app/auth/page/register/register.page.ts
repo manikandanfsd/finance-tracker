@@ -32,7 +32,7 @@ export class RegisterPage implements OnInit {
     // Check if user is already logged in
     const userInfo = localStorage.getItem('userInfo');
     if (userInfo) {
-      this.router.navigate(['/main/tabs/home']);
+      this.router.navigate(['/main/home']);
     }
   }
 

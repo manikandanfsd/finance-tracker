@@ -34,4 +34,9 @@ export class AuthService {
   getCurrentUser() {
     return this.auth.currentUser;
   }
+
+  getUserInfo() {
+    const user = localStorage.getItem('userInfo');
+    return user ? JSON.parse(user) : null;
+  }
 }

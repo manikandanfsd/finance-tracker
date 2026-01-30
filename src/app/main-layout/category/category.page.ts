@@ -30,8 +30,14 @@ export class CategoryPage {
     private alertController: AlertController,
   ) {
     // Track loading state
-    this.categories$.subscribe(() => {
-      this.isLoading = false;
+    this.categories$.subscribe({
+      next: () => {
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading categories:', err);
+        this.isLoading = false;
+      },
     });
   }
 

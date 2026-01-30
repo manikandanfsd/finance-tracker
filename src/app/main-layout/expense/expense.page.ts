@@ -50,9 +50,15 @@ export class ExpensePage implements OnInit {
     const now = new Date().toISOString();
     this.form.patchValue({ dateTime: now });
     this.displayDateTime = new Date(now).toLocaleString();
-    this.categoryService.getCategories().subscribe((data) => {
-      this.categories = data;
-      this.isLoading = false;
+    this.categoryService.getCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading categories:', err);
+        this.isLoading = false;
+      },
     });
   }
 
@@ -102,7 +108,7 @@ export class ExpensePage implements OnInit {
       this.displayDateTime = new Date().toLocaleString();
 
       // Navigate back to home
-      this.router.navigate(['/main/tabs/home']);
+      this.router.navigate(['/main/home']);
     } catch (error) {
       console.error('Error saving expense:', error);
       await this.showToast('Failed to save. Please try again.', 'danger');

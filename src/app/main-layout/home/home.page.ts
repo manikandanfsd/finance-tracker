@@ -41,7 +41,6 @@ export class HomePage implements OnInit {
 
     // Calculate totals
     this.expenses$.subscribe((expenses) => {
-      console.log(expenses, 'expenses');
       this.totalIncome = expenses
         .filter((e) => e.type === 'in')
         .reduce((sum, e) => sum + (+e.amount || 0), 0);
