@@ -1,9 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, AlertController, ToastController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonCard,
+  IonCardContent,
+  IonIcon,
+  IonButton,
+  IonSpinner,
+  AlertController,
+  ToastController,
+} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/service/auth';
-import { FormsModule } from '@angular/forms';
 
 interface UserInfo {
   uid: string;
@@ -18,7 +30,19 @@ interface UserInfo {
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonCard,
+    IonCardContent,
+    IonIcon,
+    IonButton,
+    IonSpinner,
+  ],
 })
 export class ProfilePage implements OnInit {
   userInfo: UserInfo | null = null;

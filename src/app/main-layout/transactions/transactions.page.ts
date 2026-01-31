@@ -1,7 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonSearchbar,
+  IonContent,
+  IonChip,
+  IonLabel,
+  IonSpinner,
+  IonIcon,
+} from '@ionic/angular/standalone';
 import { Category, CategoryService } from '../category/category.service';
 import {
   Expense,
@@ -15,7 +25,19 @@ import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
   templateUrl: './transactions.page.html',
   styleUrls: ['./transactions.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonSearchbar,
+    IonContent,
+    IonChip,
+    IonLabel,
+    IonSpinner,
+    IonIcon,
+  ],
 })
 export class TransactionsPage implements OnInit {
   private filterSubject = new BehaviorSubject<'all' | 'in' | 'out'>('all');

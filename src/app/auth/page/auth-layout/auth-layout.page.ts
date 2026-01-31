@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-auth-layout',
   standalone: true,
-  imports: [IonicModule, RouterModule],
+  imports: [RouterModule, IonApp, IonRouterOutlet],
   templateUrl: 'auth-layout.page.html',
 })
 export class AuthLayoutComponent {}

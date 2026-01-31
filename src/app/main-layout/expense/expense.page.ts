@@ -1,5 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule, ToastController } from '@ionic/angular';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonSegment,
+  IonSegmentButton,
+  IonLabel,
+  IonInput,
+  IonText,
+  IonIcon,
+  IonPopover,
+  IonDatetime,
+  IonSelect,
+  IonSelectOption,
+  IonTextarea,
+  IonButton,
+  IonSpinner,
+  ToastController,
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category, CategoryService } from '../category/category.service';
@@ -11,7 +30,27 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './expense.page.html',
   styleUrls: ['./expense.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonSegment,
+    IonSegmentButton,
+    IonLabel,
+    IonInput,
+    IonText,
+    IonIcon,
+    IonPopover,
+    IonDatetime,
+    IonSelect,
+    IonSelectOption,
+    IonTextarea,
+    IonButton,
+    IonSpinner,
+  ],
 })
 export class ExpensePage implements OnInit {
   categories: Category[] = [];

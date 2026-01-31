@@ -1,5 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule, AlertController, ToastController } from '@ionic/angular';
+import {
+  IonContent,
+  IonIcon,
+  IonInput,
+  IonInputPasswordToggle,
+  IonText,
+  IonButton,
+  AlertController,
+  ToastController,
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -8,7 +17,17 @@ import { AuthService } from '../../service/auth';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [IonicModule, CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    IonContent,
+    IonIcon,
+    IonInput,
+    IonInputPasswordToggle,
+    IonText,
+    IonButton,
+  ],
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })

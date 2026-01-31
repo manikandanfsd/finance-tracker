@@ -1,7 +1,21 @@
 import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { IonicModule, ToastController } from '@ionic/angular';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonCard,
+  IonCardContent,
+  IonDatetimeButton,
+  IonButton,
+  IonIcon,
+  IonSpinner,
+  IonModal,
+  IonDatetime,
+  ToastController,
+} from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import Chart from 'chart.js/auto';
 import { ExpenseService } from '../expense/expense.service';
@@ -16,7 +30,22 @@ interface CategoryData {
   templateUrl: './reports.page.html',
   styleUrls: ['./reports.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonCard,
+    IonCardContent,
+    IonDatetimeButton,
+    IonButton,
+    IonIcon,
+    IonSpinner,
+    IonModal,
+    IonDatetime,
+  ],
 })
 export class ReportsPage implements OnDestroy {
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;

@@ -2,7 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { IonicModule } from '@ionic/angular';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonContent,
+  IonCard,
+  IonItem,
+  IonLabel,
+} from '@ionic/angular/standalone';
 import {
   Expense,
   ExpenseService,
@@ -14,7 +25,20 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [IonicModule, CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonCard,
+    IonItem,
+    IonLabel,
+  ],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })

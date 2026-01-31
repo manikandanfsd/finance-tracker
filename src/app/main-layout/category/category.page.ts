@@ -1,5 +1,17 @@
 import { Component } from '@angular/core';
-import { IonicModule, AlertController } from '@ionic/angular';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonCard,
+  IonCardContent,
+  IonInput,
+  IonButton,
+  IonIcon,
+  IonSpinner,
+  AlertController,
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from './category.service';
@@ -10,7 +22,21 @@ import { serverTimestamp } from 'firebase/firestore';
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [IonicModule, CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonCard,
+    IonCardContent,
+    IonInput,
+    IonButton,
+    IonIcon,
+    IonSpinner,
+  ],
   templateUrl: './category.page.html',
   styleUrls: ['./category.page.scss'],
 })

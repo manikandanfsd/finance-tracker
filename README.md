@@ -9,3 +9,13 @@ https://ionicframework.com/docs/components
 Create new project
 
 ionic start
+
+Build APk
+
+npx cap add android
+
+npx cap sync
+
+ionic capacitor build
+
+npx cap open android
