@@ -88,3 +88,16 @@
   margin-top: 4px;
   margin-left: 4px;
 }
+
+@media (prefers-color-scheme: dark) {
+  .form-container {
+    .type-selector {
+      ion-segment {
+        ion-segment-button {
+          --color: #fff;
+          --color-checked: #fff;
+        }
+      }
+    }
+  }
+}

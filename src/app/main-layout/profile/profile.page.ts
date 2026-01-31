@@ -58,6 +58,11 @@ export class ProfilePage implements OnInit {
     this.loadUserInfo();
   }
 
+  ionViewWillEnter() {
+    // Reload data every time the view is entered
+    this.loadUserInfo();
+  }
+
   loadUserInfo() {
     const userInfoString = localStorage.getItem('userInfo');
     if (userInfoString) {
@@ -155,7 +160,8 @@ export class ProfilePage implements OnInit {
             try {
               await this.auth.logout();
               localStorage.removeItem('userInfo');
-              this.router.navigate(['/auth/login']);
+              // Navigate to login and replace URL to prevent going back
+              this.router.navigate(['/auth/login'], { replaceUrl: true });
             } catch (err) {
               console.error('Logout error:', err);
             }

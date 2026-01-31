@@ -13,6 +13,8 @@ import {
   IonCard,
   IonItem,
   IonLabel,
+  IonRefresher,
+  IonRefresherContent,
 } from '@ionic/angular/standalone';
 import {
   Expense,
@@ -38,6 +40,8 @@ import { map } from 'rxjs/operators';
     IonCard,
     IonItem,
     IonLabel,
+    IonRefresher,
+    IonRefresherContent,
   ],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
@@ -54,6 +58,22 @@ export class HomePage implements OnInit {
   constructor(private expenseService: ExpenseService) {}
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  ionViewWillEnter() {
+    // Reload data every time the view is entered
+    this.loadData();
+  }
+
+  doRefresh(event: any) {
+    this.loadData();
+    setTimeout(() => {
+      event.target.complete();
+    }, 600);
+  }
+
+  private loadData() {
     // Load user name from localStorage
     const userInfoString = localStorage.getItem('userInfo');
     if (userInfoString) {

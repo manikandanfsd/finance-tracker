@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
     // Check if user is already logged in
     const userInfo = localStorage.getItem('userInfo');
     if (userInfo) {
-      this.router.navigate(['/main/home']);
+      this.router.navigate(['/main/home'], { replaceUrl: true });
     }
   }
 
@@ -80,7 +80,8 @@ export class LoginPage implements OnInit {
       // Show success toast
       await this.showSuccessToast();
 
-      this.router.navigate(['/main/home']);
+      // Navigate to home and replace the URL to prevent going back
+      this.router.navigate(['/main/home'], { replaceUrl: true });
     } catch (err: any) {
       this.loading = false;
       // Show error alert

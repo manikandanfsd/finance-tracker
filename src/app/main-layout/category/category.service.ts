@@ -23,17 +23,21 @@ export interface Category {
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
   private categoryRef = collection(this.firestore, 'categories');
-  private userId = this.authService.getUserInfo()?.uid || '';
 
   constructor(
     private firestore: Firestore,
     private authService: AuthService,
   ) {}
 
+  // Get current user ID dynamically
+  private getUserId(): string {
+    return this.authService.getUserInfo()?.uid || '';
+  }
+
   getCategories(): Observable<Category[]> {
     const categoryQuery = query(
       this.categoryRef,
-      where('userId', '==', this.userId),
+      where('userId', '==', this.getUserId()),
     );
     return collectionData(categoryQuery, { idField: 'id' }) as Observable<
       Category[]
@@ -43,7 +47,7 @@ export class CategoryService {
   addCategory(data: { name: string; budgetAmount: number; createdAt: any }) {
     return addDoc(this.categoryRef, {
       ...data,
-      userId: this.userId,
+      userId: this.getUserId(),
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -18,6 +18,8 @@ import { CategoryService } from './category.service';
 import { RouterModule } from '@angular/router';
 
 import { serverTimestamp } from 'firebase/firestore';
+import { Observable } from 'rxjs';
+import { Category } from './category.service';
 
 @Component({
   selector: 'app-category',
@@ -40,8 +42,8 @@ import { serverTimestamp } from 'firebase/firestore';
   templateUrl: './category.page.html',
   styleUrls: ['./category.page.scss'],
 })
-export class CategoryPage {
-  categories$ = this.categoryService.getCategories();
+export class CategoryPage implements OnInit {
+  categories$!: Observable<Category[]>;
   isLoading = true;
   isSaving = false;
 
@@ -54,7 +56,21 @@ export class CategoryPage {
     private fb: FormBuilder,
     private categoryService: CategoryService,
     private alertController: AlertController,
-  ) {
+  ) {}
+
+  ngOnInit() {
+    this.loadData();
+  }
+
+  ionViewWillEnter() {
+    // Reload data every time the view is entered
+    this.loadData();
+  }
+
+  private loadData() {
+    this.isLoading = true;
+    this.categories$ = this.categoryService.getCategories();
+
     // Track loading state
     this.categories$.subscribe({
       next: () => {

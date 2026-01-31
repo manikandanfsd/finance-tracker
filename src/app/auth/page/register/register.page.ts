@@ -71,8 +71,8 @@ export class RegisterPage implements OnInit {
       // Show success toast
       await this.showSuccessToast();
 
-      // Navigate to login page
-      this.router.navigate(['/auth/login']);
+      // Navigate to login page and replace URL
+      this.router.navigate(['/auth/login'], { replaceUrl: true });
     } catch (err: any) {
       this.loading = false;
 

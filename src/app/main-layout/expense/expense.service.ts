@@ -37,19 +37,22 @@ export interface ExpenseWithCategory extends Omit<Expense, 'category'> {
 export class ExpenseService {
   private expenseRef = collection(this.firestore, 'expenses');
 
-  private userId = this.authService.getUserInfo()?.uid || '';
-
   constructor(
     private firestore: Firestore,
     private authService: AuthService,
     private categoryService: CategoryService,
   ) {}
 
+  // Get current user ID dynamically
+  private getUserId(): string {
+    return this.authService.getUserInfo()?.uid || '';
+  }
+
   // ➕ ADD EXPENSE
   addExpense(data: Expense) {
     return addDoc(this.expenseRef, {
       ...data,
-      userId: this.userId,
+      userId: this.getUserId(),
       createdAt: serverTimestamp(),
     });
   }
@@ -71,7 +74,7 @@ export class ExpenseService {
 
   // 📥 GET ALL EXPENSES
   getExpenses(startDate?: string, endDate?: string): Observable<Expense[]> {
-    const constraints = [where('userId', '==', this.userId)];
+    const constraints = [where('userId', '==', this.getUserId())];
 
     if (startDate) {
       constraints.push(where('dateTime', '>=', startDate));

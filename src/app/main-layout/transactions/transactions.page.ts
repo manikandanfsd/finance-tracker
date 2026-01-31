@@ -11,6 +11,8 @@ import {
   IonLabel,
   IonSpinner,
   IonIcon,
+  IonRefresher,
+  IonRefresherContent,
 } from '@ionic/angular/standalone';
 import { Category, CategoryService } from '../category/category.service';
 import {
@@ -37,6 +39,8 @@ import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
     IonLabel,
     IonSpinner,
     IonIcon,
+    IonRefresher,
+    IonRefresherContent,
   ],
 })
 export class TransactionsPage implements OnInit {
@@ -47,10 +51,24 @@ export class TransactionsPage implements OnInit {
   showSearch = false;
   isLoading = true;
 
-  expenses$ = this.expenseService.getExpensesWithCategory();
-  filteredExpenses$: Observable<ExpenseWithCategory[]>;
+  expenses$!: Observable<ExpenseWithCategory[]>;
+  filteredExpenses$!: Observable<ExpenseWithCategory[]>;
 
-  constructor(private expenseService: ExpenseService) {
+  constructor(private expenseService: ExpenseService) {}
+
+  ngOnInit() {
+    this.loadData();
+  }
+
+  ionViewWillEnter() {
+    // Reload data every time the view is entered
+    this.loadData();
+  }
+
+  private loadData() {
+    this.isLoading = true;
+    this.expenses$ = this.expenseService.getExpensesWithCategory();
+
     // Combine expenses with filter and search to create filtered list
     this.filteredExpenses$ = combineLatest([
       this.expenses$,
@@ -87,8 +105,6 @@ export class TransactionsPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
-
   setFilter(filter: 'all' | 'in' | 'out') {
     this.selectedFilter = filter;
     this.filterSubject.next(filter);
@@ -110,5 +126,12 @@ export class TransactionsPage implements OnInit {
   clearSearch() {
     this.searchTerm = '';
     this.searchSubject.next('');
+  }
+
+  doRefresh(event: any) {
+    this.loadData();
+    setTimeout(() => {
+      event.target.complete();
+    }, 600);
   }
 }

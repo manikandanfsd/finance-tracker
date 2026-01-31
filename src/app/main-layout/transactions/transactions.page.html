@@ -17,6 +17,10 @@
 </ion-header>
 
 <ion-content class="ion-padding-horizontal">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <div class="filters-container">
     <ion-chip
       [color]="selectedFilter === 'all' ? 'primary' : ''"
